@@ -1,6 +1,6 @@
 """
 
-  pytarl, v0.7a2
+  pytarl, v0.7a3
   ............................................................................  
   a small console/terminal text adventure-like rougelike dungeon crawler game
   written in Python 2.6.x
@@ -9,6 +9,10 @@
   Licence:     this source code is licenced under Creative Commons (CC-BY) 
                http://creativecommons.org/licenses/by/3.0/deed.en
 
+	v0.7a3  - 2012-17-06: pickaxe_use fix, some typos fixed
+	v0.7a2  - 2010-01-05: added fungi and more
+	v0.6.5  - 2010-01-04: first version
+
 """
 
 import sys
@@ -16,7 +20,7 @@ import random as rand
 
 # default declarations
 APP_NAME    = "pytarl"
-APP_VERSION = "0.7a2"
+APP_VERSION = "0.7a3"
 
 class DUNGEON:
     DIST_EXIT   =    8
@@ -55,7 +59,7 @@ class Player:
     turns       = 0
     runes       = 0
     fungi       = 0
-    fungi_load  = 0 # how much that funky poison is still in your system?   
+    fungi_load  = 0 # how much of that funky poison is still in your system?   
     gold        = DUNGEON.SIZE_DEF / 2
     food        = DUNGEON.SIZE_DEF / 2 + 25
     compass     = True
@@ -71,7 +75,7 @@ class Dungeon:
     dungeon  = [ (Player.x, Player.y) ]    
     temple   = (0,0)
     exit     = (0,0)
-    objects  = []  # all ocupied dungeon positons
+    objects  = []  # all occupied dungeon positons
     visited  = [] 
     chests,   adve,     \
     wizards,  monsters, \
@@ -183,7 +187,7 @@ def create_dungeon( _size, _Dungeon, _DUNGEON ):
         if (x,y) not in _Dungeon.dungeon:
             _Dungeon.dungeon.append( (x,y) )
                         
-    # the exit should not be near the extrance
+    # the exit should not be near the entrance
     for i in range( len(_Dungeon.dungeon)-1, -1 ):
         if abs(_Dungeon.dungeon[i][0]) + abs(_Dungeon.dungeon[i][1]) >= _DUNGEON.DIST_EXIT:
             _Dungeon.exit = _Dungeon.dungeon[i]
@@ -235,7 +239,7 @@ def create_dungeon( _size, _Dungeon, _DUNGEON ):
     _Dungeon, _Dungeon.traps    = item_dist( _DUNGEON.DISTRI_PERCENT["TRAPS"]   * per_tile, _Dungeon, _Dungeon.traps, _Dungeon.chests )
     
     # DEBUG SHIT        
-    print "c:",len(_Dungeon.chests), "a:",len(_Dungeon.adve), "w:",len(_Dungeon.wizards), "m",len(_Dungeon.monsters), "C",len(_Dungeon.casinos), "f",len(_Dungeon.fungi)        
+    # print "c:",len(_Dungeon.chests), "a:",len(_Dungeon.adve), "w:",len(_Dungeon.wizards), "m",len(_Dungeon.monsters), "C",len(_Dungeon.casinos), "f",len(_Dungeon.fungi)        
             
     return _Dungeon
     
@@ -309,6 +313,7 @@ def meet_adve( _Player, _dung, _dung_chests  ):
             _Player.gold -= PICKAXE_PRICE
             print "Wow. A brand new PICKAXE! Now you can digg through walls!"
             _Player.pickaxe = True
+			_Player.pickaxe_use = 0 # BUG-FIX
         else:
             print "Not enough gold to buy this item. You only have", _Player.gold, "gold."
     
@@ -505,7 +510,7 @@ running  = True
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 print "\nWelcome to " + APP_NAME + " (" + APP_VERSION + "/" + sys.platform + ")"
 print "Find the mysterious and ancient golden idol and make it to the exit alive!"
-print "And find some gold, while you at it!",
+print "And find some gold, while you're at it!",
 print "Enter '?' at the prompt for more help!"
 
 
@@ -552,7 +557,7 @@ while( running ):
         else:
             print "but there are none."
     
-    # key that will always be needed     
+    # keys that will always be needed     
     keys = [ KEY_HELP, KEY_NOMOVE, KEY_INFO ]
     # add fungi key if needed too   
     if Player.fungi:
@@ -646,7 +651,8 @@ while( running ):
             xd, yd = KEYS_MOVE[ key ]
             Dungeon.dungeon.append( (Player.x + xd, Player.y + yd) )
             print "- You swing your pickaxe. There: A new pathway!"
-            # the longer you use it, the more likely it breaks
+            
+			# the longer you use it, the more likely it breaks
             if Player.pickaxe_use > 0 and \
                rand.randint( 0, Player.PICKAXE_DURABILITY - Player.pickaxe_use ) == 0: 
                 print "- DANG! Your axe broke. It's useless now."
