@@ -313,7 +313,7 @@ def meet_adve( _Player, _dung, _dung_chests  ):
             _Player.gold -= PICKAXE_PRICE
             print "Wow. A brand new PICKAXE! Now you can digg through walls!"
             _Player.pickaxe = True
-			_Player.pickaxe_use = 0 # BUG-FIX
+            _Player.pickaxe_use = 0 # BUG-FIX
         else:
             print "Not enough gold to buy this item. You only have", _Player.gold, "gold."
     
@@ -650,10 +650,10 @@ while( running ):
         if Player.pickaxe:
             xd, yd = KEYS_MOVE[ key ]
             Dungeon.dungeon.append( (Player.x + xd, Player.y + yd) )
-            print "- You swing your pickaxe. There: A new pathway!"
-            
-			# the longer you use it, the more likely it breaks
-            if Player.pickaxe_use > 0 and \
+            print "- You swing your pickaxe. There: A new pathway!" 
+			
+            # the longer you use it, the more likely it breaks
+			if Player.pickaxe_use > 0 and \
                rand.randint( 0, Player.PICKAXE_DURABILITY - Player.pickaxe_use ) == 0: 
                 print "- DANG! Your axe broke. It's useless now."
                 Player.pickaxe = False
