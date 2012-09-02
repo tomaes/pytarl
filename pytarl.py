@@ -4,7 +4,7 @@
   ............................................................................  
   a small console/terminal text adventure-like rougelike dungeon crawler game
   written in Python 2.6.x
-  by Thomas Gruetzmacher (tomaes.32x.de)  
+  by Thomas Gruetzmacher (http://tomaes.32x.de)  
   ............................................................................
   Licence:     this source code is licenced under Creative Commons (CC-BY) 
                http://creativecommons.org/licenses/by/3.0/deed.en
@@ -104,7 +104,7 @@ def show_help():
 
     print "\nHere Be Dragons... and some info too:\n"
     print "* Enter '" + KEY_NORTH + "','" + KEY_SOUTH + "','" + KEY_EAST + "','" + KEY_WEST + "' to go north/south/east/west or"
-    print "  enter '" + KEY_NOMOVE + "' to let a turn pass to check your sourroundings instead."
+    print "  enter '" + KEY_NOMOVE + "' to let a turn pass to check your surroundings instead."
     print "* Enter '" + KEY_INFO + "' to see the status page."
     print "* The compass tells you how far off the exit is (x/y),"
     print "  however, it does not give you directions."
@@ -170,7 +170,7 @@ def show_info( _Player, _Dungeon ):
     print 
     
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  create a simple random dungeon, with radomly spread gold etc.
+#  create a simple random dungeon, with randomly spread gold etc.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def create_dungeon( _size, _Dungeon, _DUNGEON ):
 
@@ -494,7 +494,7 @@ try:
             DUNGEON.SIZE_DEF = int( sys.argv[1] )
             print "* Default dungeon size changed to:", DUNGEON.SIZE_DEF
         else:
-            print "* Dungeon size can only between", DUNGEON.SIZE_MIN, "and", DUNGEON.SIZE_MAX
+            print "* Dungeon size can only be between", DUNGEON.SIZE_MIN, "and", DUNGEON.SIZE_MAX
 except:
     print "* Command line parameter looks all messed up and is therefore being ignored"
     print "* To change the default dungeon size, start the script with \"pytarl.py [SIZE]\""
@@ -585,7 +585,7 @@ while( running ):
     
     # emergency exit
     if key in ["exit","EXIT","quit","QUIT"]:
-        print "- Programm Termination."
+        print "- Program Termination."
         running = False
     
     # fungi! don't eat those.
@@ -595,7 +595,7 @@ while( running ):
         Player.fungi_load += DUNGEON.FUNGI_ADDLOAD
         if Player.fungi_load > Player.FUNGI_MAX:
             Player.fungi_load = Player.FUNGI_MAX
-            print "- Due to extra high levels of fungi intoxination, your vision became all blury"
+            print "- Due to extra high levels of fungi intoxination, your vision turned all blury"
             print "  For some hours you were giggling like a five year old"
             print "  ...and you had a vision... about a hidden temple near", \
                 (Dungeon.temple[0] + rand.randint(-2, 2), Dungeon.temple[1] + rand.randint(-2, 2))
@@ -653,7 +653,7 @@ while( running ):
             print "- You swing your pickaxe. There: A new pathway!" 
 			
             # the longer you use it, the more likely it breaks
-			if Player.pickaxe_use > 0 and \
+            if Player.pickaxe_use > 0 and \
                rand.randint( 0, Player.PICKAXE_DURABILITY - Player.pickaxe_use ) == 0: 
                 print "- DANG! Your axe broke. It's useless now."
                 Player.pickaxe = False
@@ -682,7 +682,7 @@ while( running ):
         
     # meeting a fellow adventurer?
     if pos in Dungeon.adve:
-        print "\n- A fellow Adventurer is nearby!"
+        print "\n- A fellow adventurer is nearby!"
         Player = meet_adve( Player, Dungeon.dungeon, Dungeon.chests )
 
     # meeting a strange wizard?    
